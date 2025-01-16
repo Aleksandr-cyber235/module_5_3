@@ -18,10 +18,16 @@ class House:
         return f"Название: {self.name}, кол-во этажей: {self.number_of_floors}"
     """" Далее Д/З номер 3"""
     def __eq__(self, other):
-        return self.number_of_floors == other.number_of_floors
+        if isinstance(other, House): # Если other является экземпляром House
+            return self.number_of_floors == other.number_of_floors # Сравниваем по кол-во этажей
+        elif isinstance(other, int): # Если другой целое число
+            return self.number_of_floors == other # Возвращаем сравнение этажей с целым числом
 
-    def  __lt__(self, other):
-        return self.number_of_floors < other.number_of_floors
+    def  __lt__(self, other): # Тоже самое как и у __eq__, только <
+        if isinstance(other, House):
+            return self.number_of_floors < other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors < other
 
     def  __le__(self, other):
         return self.number_of_floors <= other.number_of_floors
@@ -36,7 +42,10 @@ class House:
         return self.number_of_floors != other.number_of_floors
 
     def __add__(self, value):
-        if isinstance(value, int):
+        if isinstance(value, House):
+            self.number_of_floors += value
+            return self
+        elif isinstance(value, int):
             self.number_of_floors += value
             return self
 
